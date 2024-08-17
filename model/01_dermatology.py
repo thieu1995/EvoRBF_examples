@@ -36,6 +36,7 @@ for idx_model, my_model in enumerate(Config.LIST_MODELS):
 
     list_curve_trial = []
     for idx_trial, seed in enumerate(Config.LIST_SEEDS):
+        print(f"Data: {DATA_NAME}, Model: {my_model['model_name']}, Trial: {idx_trial}")
 
         model = InaRbfTuner(problem_type="classification", bounds=Config.PROBLEM_BOUNDS, cv=4, scoring=Config.SCORING_LOSS,
                             optimizer=my_model["algorithm"], optimizer_paras=my_model["para"], verbose=Config.VERBOSE, seed=seed)
