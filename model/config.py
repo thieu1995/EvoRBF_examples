@@ -8,8 +8,8 @@ from mealpy import StringVar, IntegerVar, BoolVar
 from mealpy import FloatVar
 from pathlib import Path
 
-BASE_PATH = Path.cwd().parent
-
+# BASE_PATH = Path.cwd().parent
+BASE_PATH = Path.cwd()
 
 class Config:
 
