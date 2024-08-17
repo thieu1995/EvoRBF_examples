@@ -38,6 +38,7 @@ class Config:
     DATA_NAME_09 = "BCWD"
     DATA_NAME_10 = "BCWP"
 
+    VERBOSE = False
     SEED_SPLIT_DATA = 42
     TEST_SIZE = 0.25
     SCORING_LOSS = "F1S"

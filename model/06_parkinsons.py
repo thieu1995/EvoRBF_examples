@@ -36,7 +36,7 @@ for idx_model, my_model in enumerate(Config.LIST_MODELS):
     for idx_trial, seed in enumerate(Config.LIST_SEEDS):
 
         model = InaRbfTuner(problem_type="classification", bounds=Config.PROBLEM_BOUNDS, cv=3, scoring=Config.SCORING_LOSS,
-                            optimizer=my_model["algorithm"], optimizer_paras=my_model["para"], verbose=True, seed=seed)
+                            optimizer=my_model["algorithm"], optimizer_paras=my_model["para"], verbose=Config.VERBOSE, seed=seed)
         model.fit(data.X_train, data.y_train)
         y_pred = model.predict(data.X_test)
 
