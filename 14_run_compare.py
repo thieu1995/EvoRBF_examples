@@ -1,0 +1,131 @@
+#!/usr/bin/env python
+# Created by "Thieu" at 18:14, 07/12/2024 ----------%                                                                               
+#       Email: nguyenthieu2102@gmail.com            %                                                    
+#       Github: https://github.com/thieu1995        %                         
+# --------------------------------------------------%
+
+import numpy as np
+import scipy.stats as st
+import time
+from sklearn.model_selection import GridSearchCV, RandomizedSearchCV
+from data_utils import get_titanic
+from pathlib import Path
+import pandas as pd
+from config import Config
+from evorbf import DataTransformer, IntegerVar, StringVar, FloatVar, NiaRbfTuner, RbfClassifier
+
+
+## Load data object
+# 891 samples, 7 features, 2 classes
+X_train, X_test, y_train, y_test = get_titanic(f"{Config.PATH_READ}/titanic.csv", verbose=False)
+
+## Scaling dataset
+dt = DataTransformer(scaling_methods=("minmax",))
+X_train_scaled = dt.fit_transform(X_train)
+X_test_scaled = dt.transform(X_test)
+
+data = (X_train_scaled, X_test_scaled, y_train, y_test)
+EPOCH = 100
+POP_SIZE = 20
+
+
+def evorbf_exp(model, seed=42):
+    # Design the boundary (parameters)
+    time_start = time.perf_counter()
+    PARAM_BOUNDS = [
+        IntegerVar(lb=5, ub=50, name="size_hidden"),
+        StringVar(valid_sets=("kmeans", "random"), name="center_finder"),
+        FloatVar(lb=(0.01,), ub=(3.0,), name="sigmas"),
+        FloatVar(lb=(0.,), ub=(10.,), name="reg_lambda"),
+    ]
+    # Initialize model
+    tuner = NiaRbfTuner(problem_type="classification", bounds=PARAM_BOUNDS, cv=4, scoring="AS",
+                        optim=model["class"], optim_paras=model["paras"], verbose=False, seed=seed)
+    # Train the model
+    tuner.fit(X=X_train, y=y_train)
+
+    # Predict and evaluate
+    y_pred = tuner.predict(X_test)
+    res = tuner.best_estimator.evaluate(y_test, y_pred, list_metrics=Config.LIST_METRIC_CLS)
+    print(tuner.best_estimator)
+    print(tuner.best_params)
+
+    time_end = time.perf_counter() - time_start
+    res_predict = {"model_name": model["name"], "time_taken": time_end, **res}
+
+    # Best set of parameter
+    res_params = {"model_name": model['name'], **tuner.best_params}
+    return res_predict, res_params
+
+
+def gridsearch_exp(seed=42):
+    time_start = time.perf_counter()
+    # Define RBF Hyperparameter Space
+    param_grid = {
+        'size_hidden': list(range(5, 51)),
+        'center_finder': ["kmeans", "random"],
+        'sigmas': np.arange(0.1, 3.1, 0.1).tolist(),
+        "reg_lambda": np.arange(0., 10., 0.1).tolist()
+    }
+    # Train the model
+    searcher = GridSearchCV(estimator=RbfClassifier(seed=seed), param_grid=param_grid, cv=4)
+    searcher.fit(X_train, y_train)
+    # Predict and evaluate
+    y_pred = searcher.best_estimator_.predict(X_test)
+    res = searcher.best_estimator_.evaluate(y_test, y_pred, list_metrics=Config.LIST_METRIC_CLS)
+
+    time_end = time.perf_counter() - time_start
+    res_predict = {"model_name": "GridSearchCV", "time_taken": time_end, **res}
+
+    # Best set of parameter
+    res_params = {"model_name": "GridSearchCV", **searcher.best_params_}
+    return res_predict, res_params
+
+
+def randomsearch_exp(seed=42):
+    from scipy.stats import randint, uniform
+
+    time_start = time.perf_counter()
+    # Define RBF Hyperparameter Space
+    param_grid = {
+        'size_hidden': st.randint(5, 51),
+        'center_finder': ["kmeans", "random"],
+        'sigmas': st.uniform(0.1, 3.0),
+        'reg_lambda': st.uniform(0.0, 10.0)
+    }
+    # Train the model
+    searcher = RandomizedSearchCV(estimator=RbfClassifier(seed=seed),
+                                  param_distributions=param_grid, n_iter=EPOCH*POP_SIZE, cv=4, random_state=seed)
+    searcher.fit(X_train, y_train)
+    # Predict and evaluate
+    y_pred = searcher.best_estimator_.predict(X_test)
+    res = searcher.best_estimator_.evaluate(y_test, y_pred, list_metrics=Config.LIST_METRIC_CLS)
+
+    time_end = time.perf_counter() - time_start
+    res_predict = {"model_name": "RandomizedSearchCV", "time_taken": time_end, **res}
+
+    # Best set of parameter
+    res_params = {"model_name": "RandomizedSearchCV", **searcher.best_params_}
+    return res_predict, res_params
+
+
+if __name__ == "__main__":
+    Path(f"{Config.PATH_SAVE}/compare").mkdir(parents=True, exist_ok=True)
+
+    # Run trials in parallel for all models and seeds
+    all_results = []
+    all_best_params = []  # To store the best parameters for each trial
+
+    res01, res02 = evorbf_exp({"name": "RIME-RBF", "class": "OriginalRIME", "paras": {"epoch": EPOCH, "pop_size": POP_SIZE}})
+    res11, res12 = evorbf_exp({"name": "SHADE-RBF", "class": "OriginalSHADE", "paras": {"epoch": EPOCH, "pop_size": POP_SIZE}})
+    res21, res22 = evorbf_exp({"name": "INFO-RBF", "class": "OriginalINFO", "paras": {"epoch": EPOCH, "pop_size": POP_SIZE}})
+    res31, res32 = gridsearch_exp()
+    res41, res42 = randomsearch_exp()
+
+    # Create DataFrames with headers
+    df_result = pd.DataFrame([res01, res11, res21, res31, res41])  # Each row is a summary of metrics for a model/seed
+    df_best_params = pd.DataFrame([res02, res12, res22, res32, res42])  # Each row is the best hyperparameters for a trial
+
+    # Save DataFrames to CSV with headers
+    df_result.to_csv(f"{Config.PATH_SAVE}/compare/df_result.csv", index=False, header=True)
+    df_best_params.to_csv(f"{Config.PATH_SAVE}/compare/df_best_params.csv", index=False, header=True)
