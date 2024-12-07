@@ -1,4 +1,4 @@
-# EvoRBF examples testcase for the paper
+# EvoRBF experiments for the paper
 
 ### Install environment by
 
@@ -12,16 +12,17 @@ $ pip install -r requirements.txt
 1) You can run every single script by:
 
 ```sh
-$ python model/01_dermatology.py
-$ python model/02_heart_disease.py
-$ python model/03_hepatitis.py
-$ python model/04_chronic_kidney.py
-$ python model/05_indian_liver.py
-$ python model/06_parkinsons.py
-$ python model/07_spect.py
-$ python model/08_spectf.py
-$ python model/09_bcwd.py
-$ python model/10_bcwp.py
+$ python 01_bank_marketing.py
+$ python 02_bankruptcy.py
+$ python 03_car.py
+$ python 04_letter.py
+$ python 05_mushroom.py
+$ python 06_rice.py
+$ python 07_superconductivity.py
+$ python 08_ccpp.py
+$ python 09_concrete.py
+$ python 10_air_quality.py
+$ python 14_run_compare.py
 ```
 
 2) You can run all the scripts at the same time by:
@@ -34,12 +35,12 @@ $ ./run_experiment.sh
 
 # Citation Request
 
-Please include these citations if you plan to use this library:
+Please include these citations if you plan to use our code:
 
 ```code
 @software{thieu_2024_11136008,
   author       = {Nguyen Van Thieu},
-  title        = {EvoRBF: Evolving Radial Basis Function Network by Intelligent Nature-inspired Algorithms},
+  title        = {EvoRBF: A Nature-inspired Algorithmic Framework for Evolving Radial Basis Function Networks},
   month        = may,
   year         = 2024,
   publisher    = {Zenodo},

@@ -1,12 +1,13 @@
 #!/bin/bash
 
-python model/01_dermatology.py
-python model/02_heart_disease.py
-python model/03_hepatitis.py
-python model/04_chronic_kidney.py
-python model/05_indian_liver.py
-python model/06_parkinsons.py
-python model/07_spect.py
-python model/08_spectf.py
-python model/09_bcwd.py
-python model/10_bcwp.py
+python 01_bank_marketing.py &&
+python 02_bankruptcy.py &&
+python 03_car.py &&
+python 04_letter.py &&
+python 05_mushroom.py &&
+python 06_rice.py &&
+python 07_superconductivity.py &&
+python 08_ccpp.py &&
+python 09_concrete.py &&
+python 10_air_quality.py &&
+python 14_run_compare.py
