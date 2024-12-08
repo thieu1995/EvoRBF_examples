@@ -10,7 +10,7 @@ from config import Config
 
 def get_metrics(data_name, path_read):
 
-    df = pd.read_csv(f"{path_read}/{data_name}/df_result.csv")
+    df = pd.read_csv(f"{path_read}/{data_name}/{Config.FILE_RESULT}")
 
     # Group by 'model_name' and calculate the mean and standard deviation for each metric
     result_df = df.groupby("model_name").agg(["mean", "std"])

@@ -14,7 +14,7 @@ from config import Config
 def get_figure(data_name, metrics, path_read, path_save, exts=(".png", ), verbose=False):
     Path(f"{path_save}").mkdir(parents=True, exist_ok=True)
 
-    df = pd.read_csv(f"{path_read}/{data_name}/df_result.csv")
+    df = pd.read_csv(f"{path_read}/{data_name}/{Config.FILE_RESULT}")
 
     # # Define a list of color palettes for each metric
     # color_palettes = ["Set2", "coolwarm", "Spectral", "cubehelix", "viridis", "Accent"]
@@ -34,13 +34,14 @@ def get_figure(data_name, metrics, path_read, path_save, exts=(".png", ), verbos
             plt.show()
 
 
-get_figure(data_name="bank_marketing", metrics=Config.LIST_METRIC_CLS, path_read=f"{Config.PATH_SAVE}", path_save=f"{Config.PATH_SAVE}/visual/boxplot")
-get_figure(data_name="bankruptcy", metrics=Config.LIST_METRIC_CLS, path_read=f"{Config.PATH_SAVE}", path_save=f"{Config.PATH_SAVE}/visual/boxplot")
-get_figure(data_name="car", metrics=Config.LIST_METRIC_CLS, path_read=f"{Config.PATH_SAVE}", path_save=f"{Config.PATH_SAVE}/visual/boxplot")
-get_figure(data_name="letter", metrics=Config.LIST_METRIC_CLS, path_read=f"{Config.PATH_SAVE}", path_save=f"{Config.PATH_SAVE}/visual/boxplot")
-get_figure(data_name="mushroom", metrics=Config.LIST_METRIC_CLS, path_read=f"{Config.PATH_SAVE}", path_save=f"{Config.PATH_SAVE}/visual/boxplot")
-get_figure(data_name="rice", metrics=Config.LIST_METRIC_CLS, path_read=f"{Config.PATH_SAVE}", path_save=f"{Config.PATH_SAVE}/visual/boxplot")
-get_figure(data_name="superconductivity", metrics=Config.LIST_METRIC_REG, path_read=f"{Config.PATH_SAVE}", path_save=f"{Config.PATH_SAVE}/visual/boxplot")
-get_figure(data_name="ccpp", metrics=Config.LIST_METRIC_REG, path_read=f"{Config.PATH_SAVE}", path_save=f"{Config.PATH_SAVE}/visual/boxplot")
-get_figure(data_name="concrete", metrics=Config.LIST_METRIC_REG, path_read=f"{Config.PATH_SAVE}", path_save=f"{Config.PATH_SAVE}/visual/boxplot")
-get_figure(data_name="air_quality", metrics=Config.LIST_METRIC_REG, path_read=f"{Config.PATH_SAVE}", path_save=f"{Config.PATH_SAVE}/visual/boxplot")
+path_save = f"{Config.PATH_SAVE}/visual/boxplot"
+get_figure(data_name="bank_marketing", metrics=Config.LIST_METRIC_CLS, path_read=f"{Config.PATH_SAVE}", path_save=path_save)
+get_figure(data_name="bankruptcy", metrics=Config.LIST_METRIC_CLS, path_read=f"{Config.PATH_SAVE}", path_save=path_save)
+get_figure(data_name="car", metrics=Config.LIST_METRIC_CLS, path_read=f"{Config.PATH_SAVE}", path_save=path_save)
+get_figure(data_name="letter", metrics=Config.LIST_METRIC_CLS, path_read=f"{Config.PATH_SAVE}", path_save=path_save)
+get_figure(data_name="mushroom", metrics=Config.LIST_METRIC_CLS, path_read=f"{Config.PATH_SAVE}", path_save=path_save)
+get_figure(data_name="rice", metrics=Config.LIST_METRIC_CLS, path_read=f"{Config.PATH_SAVE}", path_save=path_save)
+get_figure(data_name="superconductivity", metrics=Config.LIST_METRIC_REG, path_read=f"{Config.PATH_SAVE}", path_save=path_save)
+get_figure(data_name="ccpp", metrics=Config.LIST_METRIC_REG, path_read=f"{Config.PATH_SAVE}", path_save=path_save)
+get_figure(data_name="concrete", metrics=Config.LIST_METRIC_REG, path_read=f"{Config.PATH_SAVE}", path_save=path_save)
+get_figure(data_name="air_quality", metrics=Config.LIST_METRIC_REG, path_read=f"{Config.PATH_SAVE}", path_save=path_save)

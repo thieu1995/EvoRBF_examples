@@ -6,27 +6,13 @@
 
 import numpy as np
 import scipy.stats as st
-import time
-from sklearn.model_selection import GridSearchCV, RandomizedSearchCV
-from data_utils import get_titanic
 from pathlib import Path
 import pandas as pd
-from config import Config
+import time
+from sklearn.model_selection import GridSearchCV, RandomizedSearchCV
 from evorbf import DataTransformer, IntegerVar, StringVar, FloatVar, NiaRbfTuner, RbfClassifier
-
-
-## Load data object
-# 891 samples, 7 features, 2 classes
-X_train, X_test, y_train, y_test = get_titanic(f"{Config.PATH_READ}/titanic.csv", verbose=False)
-
-## Scaling dataset
-dt = DataTransformer(scaling_methods=("minmax",))
-X_train_scaled = dt.fit_transform(X_train)
-X_test_scaled = dt.transform(X_test)
-
-data = (X_train_scaled, X_test_scaled, y_train, y_test)
-EPOCH = 100
-POP_SIZE = 20
+from data_utils import get_titanic
+from config import Config
 
 
 def evorbf_exp(model, seed=42):
@@ -110,6 +96,19 @@ def randomsearch_exp(seed=42):
 
 
 if __name__ == "__main__":
+    ## Load data object
+    # 891 samples, 7 features, 2 classes
+    X_train, X_test, y_train, y_test = get_titanic(f"{Config.PATH_READ}/titanic.csv", verbose=False)
+
+    ## Scaling dataset
+    dt = DataTransformer(scaling_methods=("minmax",))
+    X_train_scaled = dt.fit_transform(X_train)
+    X_test_scaled = dt.transform(X_test)
+
+    data = (X_train_scaled, X_test_scaled, y_train, y_test)
+    EPOCH = 100
+    POP_SIZE = 20
+
     Path(f"{Config.PATH_SAVE}/compare").mkdir(parents=True, exist_ok=True)
 
     # Run trials in parallel for all models and seeds

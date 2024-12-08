@@ -15,7 +15,7 @@ def get_figure(data_name, path_read, path_save, exts=(".png", ), verbose=False):
     Path(f"{path_save}").mkdir(parents=True, exist_ok=True)
 
     # Calculate the average loss for each model over epochs
-    df = pd.read_csv(f"{path_read}/{data_name}/df_loss.csv")
+    df = pd.read_csv(f"{path_read}/{data_name}/{Config.FILE_LOSS}")
 
     # # Define a list of color palettes for each metric
     # color_palettes = ["Set2", "coolwarm", "Spectral", "cubehelix", "viridis", "Accent" ,"Dark2"]
@@ -39,7 +39,7 @@ def get_figure(data_name, path_read, path_save, exts=(".png", ), verbose=False):
         plt.show()
 
 
-path_save = f"{Config.PATH_SAVE}/visual/boxplot"
+path_save = f"{Config.PATH_SAVE}/visual/convergence"
 get_figure(data_name="bank_marketing", path_read=Config.PATH_SAVE, path_save=path_save)
 get_figure(data_name="bankruptcy", path_read=Config.PATH_SAVE, path_save=path_save)
 get_figure(data_name="car", path_read=Config.PATH_SAVE, path_save=path_save)

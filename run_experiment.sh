@@ -1,5 +1,4 @@
 #!/bin/bash
-
 python 01_bank_marketing.py &&
 python 02_bankruptcy.py &&
 python 03_car.py &&
