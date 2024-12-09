@@ -19,7 +19,7 @@ def run_trial(opt, seed, data, cf):
     # Initialize model
     model = NiaRbfRegressor(size_hidden=cf.DATA10['size_hidden'], center_finder=cf.DATA10['center_finder'],
                              regularization=True, obj_name=Config.OBJ_REG,
-                             optim=opt["class"], optim_paras=opt["paras"], verbose=True, seed=seed)
+                             optim=opt["class"], optim_paras=opt["paras"], verbose=cf.VERBOSE, seed=seed)
     # Train the model
     model.fit(X=X_train, y=y_train)
 

@@ -20,7 +20,7 @@ def run_trial(opt, seed, data, cf):
     # Initialize model
     model = NiaRbfClassifier(size_hidden=cf.DATA03['size_hidden'], center_finder=cf.DATA03['center_finder'],
                              regularization=True, obj_name=cf.OBJ_CLS,
-                             optim=opt["class"], optim_paras=opt["paras"], verbose=True, seed=seed)
+                             optim=opt["class"], optim_paras=opt["paras"], verbose=cf.VERBOSE, seed=seed)
     # Train the model
     model.fit(X=X_train, y=y_train)
 

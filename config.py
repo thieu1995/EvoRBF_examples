@@ -113,31 +113,31 @@ class Config:
     LIST_SEEDS = [10, 15, 21, 24, 27, 29, 30, 35, 40, 42]
     LIST_METRIC_CLS = ["AS", "PS", "RS", "F1S", "SS", "NPV"]
     LIST_METRIC_REG =  ["MAE", "RMSE", "NNSE", "WI", "R", "KGE"]
-    N_WORKERS = 2
+    N_WORKERS = 8
 
-    EPOCH = 50
-    POP_SIZE = 20
-    LIST_SEEDS = [7]
+    # EPOCH = 50
+    # POP_SIZE = 20
+    # LIST_SEEDS = [7]
 
     LIST_MODELS = [
-        # {"name": "LDW-PSO-RBF", "class": "LDW_PSO", "paras": {"epoch": EPOCH, "pop_size": POP_SIZE}},       # 5.5 - 7.5
-        # {"name": "CL-PSO-RBF", "class": "CL_PSO", "paras": {"epoch": EPOCH, "pop_size": POP_SIZE}},         # 5.5 - 7.5
+        {"name": "LDW-PSO-RBF", "class": "LDW_PSO", "paras": {"epoch": EPOCH, "pop_size": POP_SIZE}},       # 5.5 - 7.5
+        {"name": "CL-PSO-RBF", "class": "CL_PSO", "paras": {"epoch": EPOCH, "pop_size": POP_SIZE}},         # 5.5 - 7.5
         # {"name": "AGTO-RBF", "class": "OriginalAGTO", "paras": {"epoch": EPOCH, "pop_size": POP_SIZE}},       # 13
         # {"name": "AVOA-RBF", "class": "OriginalAVOA", "paras": {"epoch": EPOCH, "pop_size": POP_SIZE}},       # 5.5 - 7.5    But getting warning divide by 0
-        # {"name": "SMA-RBF", "class": "OriginalSMA", "paras": {"epoch": EPOCH, "pop_size": POP_SIZE}},       # 5.5 - 7.5
+        {"name": "SMA-RBF", "class": "OriginalSMA", "paras": {"epoch": EPOCH, "pop_size": POP_SIZE}},       # 5.5 - 7.5
         # {"name": "SOS-RBF", "class": "OriginalSOS", "paras": {"epoch": EPOCH, "pop_size": POP_SIZE}},       # 21 - 26
-        # {"name": "GBO-RBF", "class": "OriginalGBO", "paras": {"epoch": EPOCH, "pop_size": POP_SIZE}},          # 7
-        # {"name": "PSS-RBF", "class": "OriginalPSS", "paras": {"epoch": EPOCH, "pop_size": POP_SIZE}},           # 7
+        {"name": "GBO-RBF", "class": "OriginalGBO", "paras": {"epoch": EPOCH, "pop_size": POP_SIZE}},          # 7
+        {"name": "PSS-RBF", "class": "OriginalPSS", "paras": {"epoch": EPOCH, "pop_size": POP_SIZE}},           # 7
         # {"name": "E-AEO-RBF", "class": "EnhancedAEO", "paras": {"epoch": EPOCH, "pop_size": POP_SIZE}},         # 14 - 16
         # {"name": "AAEO-RBF", "class": "AugmentedAEO", "paras": {"epoch": EPOCH, "pop_size": POP_SIZE}},         # 14
-        # {"name": "SADE-RBF", "class": "SADE", "paras": {"epoch": EPOCH, "pop_size": POP_SIZE}},                 # 7
-        # {"name": "CMA-ES-RBF", "class": "CMA_ES", "paras": {"epoch": EPOCH, "pop_size": POP_SIZE}},             # 7
-        # {"name": "SHADE-RBF", "class": "OriginalSHADE", "paras": {"epoch": EPOCH, "pop_size": POP_SIZE}},       # 4.5
+        {"name": "SADE-RBF", "class": "SADE", "paras": {"epoch": EPOCH, "pop_size": POP_SIZE}},                 # 7
+        {"name": "CMA-ES-RBF", "class": "CMA_ES", "paras": {"epoch": EPOCH, "pop_size": POP_SIZE}},             # 7
+        {"name": "SHADE-RBF", "class": "OriginalSHADE", "paras": {"epoch": EPOCH, "pop_size": POP_SIZE}},       # 4.5
         # {"name": "TLO-RBF", "class": "OriginalTLO", "paras": {"epoch": EPOCH, "pop_size": POP_SIZE}},     # 15
         # {"name": "QSA-RBF", "class": "OriginalQSA", "paras": {"epoch": EPOCH, "pop_size": POP_SIZE}},       # 14
-        # {"name": "EFO-RBF", "class": "OriginalEFO", "paras": {"epoch": EPOCH, "pop_size": POP_SIZE}},       # 0.33
+        {"name": "EFO-RBF", "class": "OriginalEFO", "paras": {"epoch": EPOCH, "pop_size": POP_SIZE}},       # 0.33
         # {"name": "M-EO-RBF", "class": "ModifiedEO", "paras": {"epoch": EPOCH, "pop_size": POP_SIZE}},       # 13
-        # {"name": "RIME-RBF", "class": "OriginalRIME", "paras": {"epoch": EPOCH, "pop_size": POP_SIZE}},     # 8
+        {"name": "RIME-RBF", "class": "OriginalRIME", "paras": {"epoch": EPOCH, "pop_size": POP_SIZE}},     # 8
         # {"name": "MGTO-RBF", "class": "MGTO", "paras": {"epoch": EPOCH, "pop_size": POP_SIZE}},         # 15
         {"name": "HI-WOA-RBF", "class": "HI_WOA", "paras": {"epoch": EPOCH, "pop_size": POP_SIZE}},     # 6
         # {"name": "SHO-RBF", "class": "OriginalSHO", "paras": {"epoch": EPOCH, "pop_size": POP_SIZE}},   # 19 - 36
