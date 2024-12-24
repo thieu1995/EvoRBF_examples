@@ -58,7 +58,7 @@ if __name__ == "__main__":
     all_results = []
 
     ## Run parallel ==============================================================
-    with ProcessPoolExecutor(max_workers=Config.N_WORKERS) as executor:
+    with ProcessPoolExecutor(max_workers=6) as executor:
         futures = []
         for opt in Config.LIST_MODELS:
             for seed in Config.LIST_SEEDS:
